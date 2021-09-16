@@ -1,3 +1,4 @@
+import 'package:ad_synergy/pages/home/profile.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -201,7 +202,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.account_circle_outlined),
-            label: 'profiles',
+            label: 'Profiles',
             backgroundColor: Color(0xff5ac18e),
           ),
         ],
@@ -510,13 +511,4 @@ class HomeScreen extends StatelessWidget {
   }
 }
 
-class ProfileScreen extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      width: double.infinity,
-      height: double.infinity,
-      child: Center(child: Text('Profile')),
-    );
-  }
-}
+
