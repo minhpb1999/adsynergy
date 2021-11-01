@@ -1,6 +1,7 @@
 
 
 
+import 'package:ad_synergy/pages/home/home_page.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -203,7 +204,7 @@ Widget buildLoginButton()
       elevation: 5,
      // onPressed: () => print('Login Pressed'),
       onPressed: () => Navigator.of(context).push(
-          new MaterialPageRoute(builder: (_) => new HomeScreen())),
+          new MaterialPageRoute(builder: (_) => new HomePage())),
       /*onPressed: () => MyNavigator.goToSignUp(context),*/
 
 

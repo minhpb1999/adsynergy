@@ -26,9 +26,9 @@ dependencies:
 
   google_fonts: ^2.0.0
 
-  email_validator: ^1.0.6
+  email_validator: ^2.0.1
 
-  shared_preferences: ^0.5.7+3
+  shared_preferences: ^2.0.7
   after_layout: ^1.0.7+2
   rflutter_alert:
     git: git://github.com/RatelHub/rflutter_alert.git
@@ -56,7 +56,7 @@ flutter:
 
   # To add assets to your application, add an assets section, like this:
   assets:
-    - assets/images/
+    - assets/images/Camera Icon.svg
     - assets/images/success.png
     - assets/images/success1.png
     - assets/images/success2.png

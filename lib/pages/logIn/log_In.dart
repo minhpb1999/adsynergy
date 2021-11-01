@@ -1,3 +1,4 @@
+import 'package:ad_synergy/pages/home/home_page.dart';
 import 'package:email_validator/email_validator.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -280,11 +281,11 @@ Widget buildLoginButton()
       elevation: 5,
      // onPressed: () => print('Login Pressed'),
 
-//      onPressed: () => Navigator.of(context).push(
-//          new MaterialPageRoute(builder: (_) => new HomeScreen())),
+      onPressed: () => Navigator.of(context).push(
+          new MaterialPageRoute(builder: (_) => new HomePage())),
 
      // onPressed: _submitCommand,
-      onPressed: validateAndSave,
+      //onPressed: validateAndSave,
 
       /*onPressed: () => MyNavigator.goToSignUp(context),*/
 

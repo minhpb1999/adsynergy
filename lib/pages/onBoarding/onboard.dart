@@ -282,8 +282,8 @@ class _OnBoardScreenState  extends State<OnBoardScreen> {
                     color:Color(0xff5ac18e),
                     textColor: Colors.white,
                     onPressed: () => Navigator.of(context).push(
-//                        new MaterialPageRoute(builder: (_) => new LoginScreen())),
-                          new MaterialPageRoute(builder: (_) => new HomePage())),
+                          new MaterialPageRoute(builder: (_) => new LoginScreen())),
+//                          new MaterialPageRoute(builder: (_) => new HomePage())),
                   ),
 
                 ],

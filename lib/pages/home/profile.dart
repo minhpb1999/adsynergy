@@ -1,3 +1,7 @@
+import 'package:ad_synergy/pages/home/profiles_childrent/advertiser_profile.dart';
+import 'package:ad_synergy/pages/home/profiles_childrent/corporate_profile.dart';
+import 'package:ad_synergy/pages/home/profiles_childrent/professional_profile.dart';
+import 'package:ad_synergy/pages/home/profiles_childrent/publisher_profile.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -50,47 +54,19 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
           ),
 
-
-
-          SizedBox(
-            height: 115,
-            width: 115,
-            child: Stack(
-              fit: StackFit.expand,
-              overflow: Overflow.visible,
-              children: [
-                CircleAvatar(
-                  backgroundImage: AssetImage('assets/images/user.png'),
-                ),
-                Positioned(
-                  right: -12,
-                  bottom: 0,
-                  child: SizedBox(
-                    height: 46,
-                    width: 46,
-                    child: FlatButton(
-                      padding: EdgeInsets.zero,
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(50),
-                        side: BorderSide(color: Colors.white),
-                    ),
-                      color: Color(0xfff5f6f9),
-                      onPressed: () {},
-                      child: SvgPicture.asset('assets/images/CameraIcon.svg'),
-                    ),
-                  ),
-                )
-              ],
-            ),
-            ),
-          SizedBox(height: 20,),
+          SizedBox(height: 10,),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
             child: FlatButton(
               padding: EdgeInsets.all(20),
                 shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
                 color: Color(0xffc8e6c9),
-                onPressed: () {},
+                onPressed: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (BuildContext context) => CorporateProfile()),
+                  );
+                },
                 child: Row(
                   children: [
                     Expanded(child: Text(
@@ -108,7 +84,12 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 padding: EdgeInsets.all(20),
                 shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
                 color: Color(0xffc8e6c9),
-                onPressed: () {},
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (BuildContext context) => ProfessionalProfile()),
+                  );
+                },
                 child: Row(
                   children: [
                     Expanded(child: Text(
@@ -126,7 +107,12 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 padding: EdgeInsets.all(20),
                 shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
                 color: Color(0xffc8e6c9),
-                onPressed: () {},
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (BuildContext context) => AdvertiserProfile()),
+                  );
+                },
                 child: Row(
                   children: [
                     Expanded(child: Text(
@@ -144,7 +130,12 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 padding: EdgeInsets.all(20),
                 shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
                 color: Color(0xffc8e6c9),
-                onPressed: () {},
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (BuildContext context) => PublisherProfile()),
+                  );
+                },
                 child: Row(
                   children: [
                     Expanded(child: Text(

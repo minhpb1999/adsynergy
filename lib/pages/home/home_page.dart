@@ -1,4 +1,7 @@
 import 'package:ad_synergy/pages/home/profile.dart';
+import 'package:ad_synergy/pages/home/swap/swap.dart';
+import 'components/header.dart';
+import 'message/message.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -8,11 +11,9 @@ class HomePage extends StatefulWidget {
   _HomePageState createState() => new _HomePageState();
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
 }
-
+String _userType = 'Publisher';
 class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
   int _selectedIndex = 0;
-  String _userType = 'Publisher';
-  bool _searching = false;
   var _listItems = [];
   var listPublisherItems = [
     {
@@ -84,8 +85,6 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
     },
   ];
 
-  static const TextStyle optionStyle =
-      TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
   static List<Widget> _widgetOptions = <Widget>[
     HomeScreen(),
     OfferScreen(),
@@ -130,39 +129,9 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
     Size size = MediaQuery.of(context).size;
     return Scaffold(
       key: widget.scaffoldKey,
-      appBar: AppBar(
-        backgroundColor: Color(0xff5ac18e),
-        leading: IconButton(
-          icon: Icon(Icons.menu, color: Colors.white),
-          onPressed: () => widget.scaffoldKey.currentState.openDrawer(),
-        ),
-        title: Center(
-            child: SearchBar(
-          isSearching: _searching,
-        )),
-        actions: <Widget>[
-          IconButton(
-            icon: _searching?Icon(Icons.clear, color: Colors.white):Icon(Icons.search, color: Colors.white),
-            onPressed: () {
-              setState(() {
-                _searching = !_searching;
-              });
-            },
-            tooltip: 'Search',
-          ),
-          PopupMenuButton<String>(
-            icon: Icon(Icons.more_horiz, color: Colors.white,),
-            onSelected: (val) => handleClick(val, context),
-            itemBuilder: (BuildContext context) {
-              return {'Help','Feedback','Logout',}.map((String choice) {
-                return PopupMenuItem<String>(
-                  value: choice,
-                  child: Text(choice),
-                );
-              }).toList();
-            },
-          ),
-        ],
+        appBar: header(
+        context,
+        function: () => widget.scaffoldKey.currentState.openDrawer(),
       ),
       drawer: Drawer(
         // Add a ListView to the drawer. This ensures the user can scroll
@@ -213,64 +182,6 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
         onTap: _onItemTapped,
       ),
     );
-  }
-
-  void _openPopup(context) {
-    Alert(
-        context: context,
-        title: "FEEDBACK",
-        content: Column(
-          children: <Widget>[
-            TextField(
-              decoration: InputDecoration(
-                icon: Icon(Icons.feedback),
-                labelText: 'Your feedback',
-              ),
-            ),
-            TextField(
-              obscureText: true,
-              decoration: InputDecoration(
-                icon: Icon(Icons.email),
-                labelText: 'Email for respones',
-              ),
-            ),
-          ],
-        ),
-        buttons: [
-          DialogButton(
-            onPressed: () => Navigator.pop(context),
-            child: Text(
-              "Send",
-              style: TextStyle(color: Colors.white, fontSize: 15),
-            ),
-          )
-        ]).show();
-  }
-
-  void handleClick(String value, BuildContext context) {
-    switch (value) {
-      case 'Help':
-        widget.scaffoldKey.currentState.showSnackBar(
-          SnackBar(
-            content: Text(
-              'Help Selected',
-            ),
-          ),
-        );
-        break;
-      case 'Feedback':
-        _openPopup(context);
-        break;
-      case 'Logout':
-        widget.scaffoldKey.currentState.showSnackBar(
-          SnackBar(
-            content: Text(
-              'Logout Selected',
-            ),
-          ),
-        );
-        break;
-    }
   }
 
   List<Widget> getDrawer() {
@@ -356,116 +267,6 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
   }
 }
 
-class SearchBar extends StatelessWidget {
-  final bool isSearching;
-
-  SearchBar({@required this.isSearching});
-
-  @override
-  Widget build(BuildContext context) {
-    return Stack(
-      alignment: Alignment.center,
-      children: [
-        AnimateExpansion(
-          animate: !isSearching,
-          axisAlignment: 1.0,
-          child: Text('', style: TextStyle(color: Colors.white)),
-        ),
-        AnimateExpansion(
-          animate: isSearching,
-          axisAlignment: -1.0,
-          child: Search(),
-        ),
-      ],
-    );
-  }
-}
-
-class Search extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return TextField(
-      autofocus: false,
-      decoration: InputDecoration(
-        border: InputBorder.none,
-        hintText: 'Search for...',
-        hintStyle: TextStyle(
-          fontSize: 17,
-          color: Colors.white,
-        ),
-      ),
-    );
-  }
-}
-
-class AnimateExpansion extends StatefulWidget {
-  final Widget child;
-  final bool animate;
-  final double axisAlignment;
-
-  AnimateExpansion({
-    this.animate = false,
-    this.axisAlignment,
-    this.child,
-  });
-
-  @override
-  _AnimateExpansionState createState() => _AnimateExpansionState();
-}
-
-class _AnimateExpansionState extends State<AnimateExpansion>
-    with SingleTickerProviderStateMixin {
-  AnimationController _animationController;
-  Animation<double> _animation;
-
-  void prepareAnimations() {
-    _animationController = AnimationController(
-      vsync: this,
-      duration: Duration(milliseconds: 350),
-    );
-    _animation = CurvedAnimation(
-      parent: _animationController,
-      curve: Curves.easeInCubic,
-      reverseCurve: Curves.easeOutCubic,
-    );
-  }
-
-  void _toggle() {
-    if (widget.animate) {
-      _animationController.forward();
-    } else {
-      _animationController.reverse();
-    }
-  }
-
-  @override
-  void initState() {
-    super.initState();
-    prepareAnimations();
-    _toggle();
-  }
-
-  @override
-  void didUpdateWidget(AnimateExpansion oldWidget) {
-    super.didUpdateWidget(oldWidget);
-    _toggle();
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return SizeTransition(
-        axis: Axis.horizontal,
-        axisAlignment: -1.0,
-        sizeFactor: _animation,
-        child: widget.child);
-  }
-
-  @override
-  void dispose() {
-    _animationController.dispose();
-    super.dispose();
-  }
-}
 
 class OfferScreen extends StatelessWidget {
   @override
@@ -478,37 +279,136 @@ class OfferScreen extends StatelessWidget {
   }
 }
 
-class MessageScreen extends StatelessWidget {
+class HomeScreen extends StatefulWidget {
+  @override
+  _HomeScreenState createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> {
+  String _Type;
+  TableRow buildTableRow({String publication, String slot, String placement, String impression_click}){
+    return TableRow(
+      children: <Widget>[
+        Container(
+          height: 30,
+          child: Center(
+            child: Text(publication),
+          ),
+        ),
+        Center(
+          child: Text(slot),
+        ),
+        Center(
+          child: Text(placement),
+        ),
+        Center(
+          child: Text(impression_click,
+          ),
+        ),
+      ],
+    );
+  }
+
+  builAdvertiserView(){
+    return Text('Advertiser');
+  }
+
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return _userType == 'Advertiser' ? builAdvertiserView() :
+    Container(
+      padding: EdgeInsets.all(10.0),
       width: double.infinity,
       height: double.infinity,
-      child: Center(child: Text('Message')),
+      child: Table(
+//        border: TableBorder.all(),
+        columnWidths: const <int, TableColumnWidth>{
+          0: FlexColumnWidth(),
+          1: FixedColumnWidth(64),
+          2: FlexColumnWidth(),
+          3: FlexColumnWidth()
+        },
+        defaultVerticalAlignment: TableCellVerticalAlignment.middle,
+        children: <TableRow>[
+          TableRow(
+            children: <Widget>[
+              Container(
+                height: 30,
+                child: Align(
+                  alignment: Alignment.bottomRight,
+                  child: Text(
+                    'Publisher ',
+                    style: TextStyle(
+                      color: Color(0xff5ac18e),
+                      fontSize: 22,
+                      fontWeight: FontWeight.bold,
+                      fontFamily: 'Roboto',
+                    ),
+                  ),
+                ),
+              ),
+              SizedBox(),
+              SizedBox(),
+              SizedBox(),
+            ]
+          ),
+          TableRow(
+            children: <Widget>[
+              Container(
+                height: 50,
+                child: Center(
+                  child: Text('Publication',
+                    style: TextStyle(
+                      color: Color(0xff5ac18e),
+                      fontSize: 16,
+                      fontFamily: 'Roboto',
+                    ),),
+                ),
+              ),
+              Center(
+                child: Text('# Slots',
+                  style: TextStyle(
+                    color: Color(0xff5ac18e),
+                    fontSize: 16,
+                    fontFamily: 'Roboto',
+                  ),),
+              ),
+              Center(
+                child: Text('# Placements',
+                  style: TextStyle(
+                    color: Color(0xff5ac18e),
+                    fontSize: 16,
+                    fontFamily: 'Roboto',
+                  ),),
+              ),
+              Center(
+                child: Text('#Impressions  / Clicks',
+                    style: TextStyle(
+                      color: Color(0xff5ac18e),
+                      fontSize: 16,
+                      fontFamily: 'Roboto',
+                    ),
+                ),
+              ),
+            ],
+          ),
+          buildTableRow(
+            publication: 'Subject A',
+            slot: '0',
+            placement: '0',
+            impression_click: '0/0',
+          ),
+          buildTableRow(
+            publication: 'Subject B',
+            slot: '0',
+            placement: '0',
+            impression_click: '0/0',
+          )
+        ],
+      ),
     );
   }
 }
 
-class SwapScreen extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      width: double.infinity,
-      height: double.infinity,
-      child: Center(child: Text('Swap')),
-    );
-  }
-}
-
-class HomeScreen extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      width: double.infinity,
-      height: double.infinity,
-      child: Center(child: Text('No publications have been added.')),
-    );
-  }
-}
 
 
