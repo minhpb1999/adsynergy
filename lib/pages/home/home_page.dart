@@ -309,13 +309,13 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
-  builAdvertiserView(){
+  buildAdvertiserView(){
     return Text('Advertiser');
   }
 
   @override
   Widget build(BuildContext context) {
-    return _userType == 'Advertiser' ? builAdvertiserView() :
+    return _userType == 'Advertiser' ? buildAdvertiserView() :
     Container(
       padding: EdgeInsets.all(10.0),
       width: double.infinity,
