@@ -2,6 +2,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class SendMessage extends StatefulWidget {
+  String to;
+  SendMessage(this.to);
   @override
   _SendMessageState createState() => _SendMessageState();
 }
@@ -18,7 +20,7 @@ class _SendMessageState extends State<SendMessage> {
         padding: EdgeInsets.all(16),
         child: Column(
           children: [
-            buildTextField(title: 'To'),
+            buildTextField(title: 'To', content: widget.to),
             SizedBox(height: 8,),
             buildTextField(title: 'Cc'),
             SizedBox(height: 8,),
@@ -43,7 +45,7 @@ class _SendMessageState extends State<SendMessage> {
     );
   }
 
-  Widget buildTextField({String title, int maxlines = 1}) {
+  Widget buildTextField({String title, int maxlines = 1, String content = ''}) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -62,6 +64,7 @@ class _SendMessageState extends State<SendMessage> {
             fontSize: 14,
           ),
           decoration: InputDecoration(
+            hintText: content,
             //contentPadding: EdgeInsets.only(top: 0, bottom: 0, left: 10, right: 10),
             border: OutlineInputBorder(),
           ),

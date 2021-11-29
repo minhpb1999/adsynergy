@@ -114,7 +114,7 @@ class _MessageScreenState extends State<MessageScreen> {
         onPressed: () {
           Navigator.push(
             context,
-            MaterialPageRoute(builder: (BuildContext context) => SendMessage()),
+            MaterialPageRoute(builder: (BuildContext context) => SendMessage('')),
           );
         },
         child: const Icon(Icons.add),
@@ -339,7 +339,7 @@ void openBottomSheet(context, String sender, String subject) {
                         onTap: (){
                           Navigator.push(
                               context,
-                              MaterialPageRoute(builder: (context) => SendMessage()));
+                              MaterialPageRoute(builder: (context) => SendMessage(sender)));
                         },
                         child: Container(
                           width: 120,

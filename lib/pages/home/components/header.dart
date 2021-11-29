@@ -1,3 +1,6 @@
+import 'package:ad_synergy/pages/home/search/publication_search/publication_search.dart';
+
+import '../search/swap_search/swap_search.dart';
 import 'package:flutter/material.dart';
 import 'package:rflutter_alert/rflutter_alert.dart';
 
@@ -13,7 +16,9 @@ AppBar header(context, {Function function}) {
       IconButton(
         icon: Icon(Icons.search, color: Colors.white),
         tooltip: 'Search',
-        onPressed: (){},
+        onPressed: (){
+          _openSearchOptions(context);
+        },
       ),
       PopupMenuButton<String>(
         icon: Icon(Icons.more_horiz, color: Colors.white,),
@@ -91,4 +96,86 @@ void _openPopup(context) {
           ),
         )
       ]).show();
+}
+
+void _openSearchOptions(context) {
+  showDialog(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          //backgroundColor: Color(0xffc8e6c9),
+            title: Text('What are you looking for?',
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                color: Color(0xff5ac18e),
+                fontSize: 20,
+                fontWeight: FontWeight.bold,
+                fontFamily: 'Roboto',
+              ),
+            ),
+            actions: <Widget>[
+              SizedBox(
+                  width: MediaQuery.of(context).size.width,
+                  child: Column(
+                      mainAxisAlignment: MainAxisAlignment.start,
+//                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        ButtonTheme(
+                            minWidth: 25.0,
+                            height: 25.0,
+                            child: OutlineButton(
+                                borderSide: BorderSide(color: Colors.black26),
+                              textColor: Colors.black,
+                                child: new Text("Products and Brands",
+                                      style: TextStyle(
+                                        fontSize: 18,
+                                      ),
+                                ),
+                                shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(20)),
+                                onPressed: () {},
+                            ),
+                        ),
+                        SizedBox(width: 8.0),
+                        ButtonTheme(
+                          minWidth: 25.0,
+                          height: 25.0,
+                          child: OutlineButton(
+                            borderSide: BorderSide(color: Colors.black26),
+                            textColor: Colors.black,
+                            child: new Text("Publications",
+                              style: TextStyle(
+                                fontSize: 18,
+                              ),),
+                            shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(20)),
+                            onPressed: () {
+                              Navigator.push(context, MaterialPageRoute(builder: (context) => PublicationSearch()));
+                            },
+                          ),
+                        ),
+                        SizedBox(width: 8.0),
+                        ButtonTheme(
+                          minWidth: 25.0,
+                          height: 25.0,
+                          child: OutlineButton(
+                            borderSide: BorderSide(color: Colors.black26),
+                            textColor: Colors.black,
+                            child: new Text("Swap partners",
+                              style: TextStyle(
+                                fontSize: 18,
+                              ),),
+                            shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(20)),
+                            onPressed: () {
+                              Navigator.push(context, MaterialPageRoute(builder: (context) => SwapSearch()));
+                            },
+                          ),
+                        ),
+                      ],
+                  ),
+              ),
+            ]
+        );
+      });
 }

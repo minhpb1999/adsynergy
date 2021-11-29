@@ -1,55 +1,67 @@
-import 'package:ad_synergy/pages/home/profile.dart';
+import 'profiles_childrent/profile.dart';
+import 'package:ad_synergy/pages/home/publisher/ads.dart';
+import 'package:ad_synergy/pages/home/publisher/extra.dart';
+import 'package:ad_synergy/pages/home/publisher/placement.dart';
+import 'package:ad_synergy/pages/home/publisher/publication.dart';
+import 'package:ad_synergy/pages/home/publisher/stats.dart';
 import 'package:ad_synergy/pages/home/swap/swap.dart';
+import 'advertiser/ads.dart';
+import 'advertiser/placements.dart';
 import 'components/header.dart';
 import 'message/message.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:rflutter_alert/rflutter_alert.dart';
+
+
+import 'offers/offers.dart';
 
 class HomePage extends StatefulWidget {
   _HomePageState createState() => new _HomePageState();
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
 }
-String _userType = 'Publisher';
+
 class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
+  String _userType = 'Publisher';
   int _selectedIndex = 0;
   var _listItems = [];
   var listPublisherItems = [
     {
       "title": 'Publications',
       "icon": Icons.publish,
-      "onPressed": () => print('Publications')
+      "onPressed": Publication()
     },
     {
       "title": 'Slots',
       "icon": Icons.stacked_line_chart,
-      "onPressed": () => print('Slots')
+      "onPressed": ExtraPage()
     },
     {
       "title": 'Placements',
       "icon": Icons.location_city,
-      "onPressed": () => print('Placements')
+      "onPressed": Placement()
     },
     {
       "title": 'Ads',
       "icon": Icons.card_membership,
-      "onPressed": () => print('Ads')
+      "onPressed": AdsPage()
     },
     {
       "title": 'Stats',
       "icon": Icons.data_usage,
-      "onPressed": () => print('Stats')
+      "onPressed": ChartListView(
+        items: List<ListItem>.generate(1,
+              (i) => HeadingItem(),
+        ),)
     },
     {
       "title": 'Inventory',
       "icon": Icons.inventory,
-      "onPressed": () => print('Inventory')
+      "onPressed": ExtraPage()
     },
     {
       "title": 'ROI',
       "icon": Icons.waterfall_chart,
-      "onPressed": () => print('ROI')
+      "onPressed": ExtraPage()
     }
   ];
   var listAdvertiserItems = [
@@ -61,7 +73,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
     {
       "title": 'Ads',
       "icon": Icons.card_membership,
-      "onPressed": () => print('Ads')
+      "onPressed": AdvertisementAdsPage()
     },
     {
       "title": 'Campaigns',
@@ -71,17 +83,20 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
     {
       "title": 'Placements',
       "icon": Icons.location_city,
-      "onPressed": () => print('Placements')
+      "onPressed": AdvertisementPlacement()
     },
     {
       "title": 'Stats',
       "icon": Icons.data_usage,
-      "onPressed": () => print('Stats')
+      "onPressed": ChartListView(
+        items: List<ListItem>.generate(1,
+              (i) => HeadingItem(),
+        ),)
     },
     {
       "title": 'ROI',
       "icon": Icons.waterfall_chart,
-      "onPressed": () => print('ROI')
+      "onPressed": ExtraPage()
     },
   ];
 
@@ -109,6 +124,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
           setState(() {
             _listItems = listPublisherItems;
           });
+          //Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>super.widget));
         }
         break;
       case 'Advertiser':
@@ -259,25 +275,15 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
         child: ListTile(
           title: Text(_listItems[i]["title"]),
           leading: Icon(_listItems[i]["icon"]),
-          onTap: _listItems[i]["onPressed"],
-        ),
-      ));
+          onTap: () => Navigator.push(
+              context,
+              MaterialPageRoute(
+                  builder: (context) => _listItems[i]["onPressed"])))));
     }
     return drawer;
   }
 }
 
-
-class OfferScreen extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      width: double.infinity,
-      height: double.infinity,
-      child: Center(child: Text('Offer')),
-    );
-  }
-}
 
 class HomeScreen extends StatefulWidget {
   @override
@@ -315,8 +321,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return _userType == 'Advertiser' ? buildAdvertiserView() :
-    Container(
+    return Container(
       padding: EdgeInsets.all(10.0),
       width: double.infinity,
       height: double.infinity,
