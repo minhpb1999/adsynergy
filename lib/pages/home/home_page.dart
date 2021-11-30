@@ -1,3 +1,4 @@
+import 'advertiser/campaign.dart';
 import 'advertiser/products.dart';
 import 'profiles_childrent/profile.dart';
 import 'package:ad_synergy/pages/home/publisher/ads.dart';
@@ -79,7 +80,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
     {
       "title": 'Campaigns',
       "icon": Icons.campaign,
-      "onPressed": () => print('Campaigns')
+      "onPressed": Campaign()
     },
     {
       "title": 'Placements',
